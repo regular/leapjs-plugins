@@ -1474,6 +1474,7 @@ Recording.prototype = {
 
     }
 
+    frameData.playback = true;
     return frameData;
   },
 
