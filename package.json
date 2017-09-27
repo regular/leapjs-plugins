@@ -4,7 +4,7 @@
   "description": "A collection of useful plugins for LeapJS",
   "main": "main/leapjs-plugins-0.1.12.js",
   "dependencies": {
-    "three": "^0.69.0"
+    "three": "^0.87.1"
   },
   "devDependencies": {
     "coffee-script": ">=1.7.1",
