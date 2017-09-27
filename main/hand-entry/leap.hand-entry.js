@@ -1,10 +1,10 @@
 //CoffeeScript generated from main/hand-entry/leap.hand-entry.coffee
+
 /*
 Emits controller events when a hand enters of leaves the frame
 "handLost" and "handFound"
 Each event also includes the hand object, which will be invalid for the handLost event.
-*/
-
+ */
 
 (function() {
   var handEntry;
@@ -27,7 +27,7 @@ Each event also includes the hand object, which will be invalid for the handLost
     });
     return {
       frame: function(frame) {
-        var id, newValidHandIds, _i, _len, _results;
+        var i, id, len, newValidHandIds, results;
         newValidHandIds = frame.hands.map(function(hand) {
           return hand.id;
         });
@@ -41,17 +41,17 @@ Each event also includes the hand object, which will be invalid for the handLost
           len--;
         }
       };
-        _results = [];
-        for (_i = 0, _len = newValidHandIds.length; _i < _len; _i++) {
-          id = newValidHandIds[_i];
+        results = [];
+        for (i = 0, len = newValidHandIds.length; i < len; i++) {
+          id = newValidHandIds[i];
           if (activeHandIds.indexOf(id) === -1) {
             activeHandIds.push(id);
-            _results.push(this.emit('handFound', frame.hand(id)));
+            results.push(this.emit('handFound', frame.hand(id)));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       }
     };
   };

@@ -1,7 +1,7 @@
 //CoffeeScript generated from main/transform/leap.transform.coffee
 (function() {
   Leap.plugin('transform', function(scope) {
-    var noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices, _directionTransform;
+    var _directionTransform, noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices;
     if (scope == null) {
       scope = {};
     }
@@ -49,17 +49,17 @@
       }
     };
     transformPositions = function(matrix, vec3s) {
-      var vec3, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = vec3s.length; _i < _len; _i++) {
-        vec3 = vec3s[_i];
+      var i, len1, results, vec3;
+      results = [];
+      for (i = 0, len1 = vec3s.length; i < len1; i++) {
+        vec3 = vec3s[i];
         if (vec3) {
-          _results.push(Leap.vec3.transformMat4(vec3, vec3, matrix));
+          results.push(Leap.vec3.transformMat4(vec3, vec3, matrix));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
     transformMat4Implicit0 = function(out, a, m) {
       var x, y, z;
@@ -72,31 +72,31 @@
       return out;
     };
     transformDirections = function(matrix, vec3s) {
-      var vec3, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = vec3s.length; _i < _len; _i++) {
-        vec3 = vec3s[_i];
+      var i, len1, results, vec3;
+      results = [];
+      for (i = 0, len1 = vec3s.length; i < len1; i++) {
+        vec3 = vec3s[i];
         if (vec3) {
-          _results.push(transformMat4Implicit0(vec3, vec3, matrix));
+          results.push(transformMat4Implicit0(vec3, vec3, matrix));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
     transformWithMatrices = function(hand, transform, scale) {
-      var finger, scalarScale, _i, _j, _len, _len1, _ref, _ref1;
+      var finger, i, j, len1, len2, ref, ref1, scalarScale;
       transformDirections(transform, [hand.direction, hand.palmNormal, hand.palmVelocity, hand.arm.basis[0], hand.arm.basis[1], hand.arm.basis[2]]);
-      _ref = hand.fingers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        finger = _ref[_i];
+      ref = hand.fingers;
+      for (i = 0, len1 = ref.length; i < len1; i++) {
+        finger = ref[i];
         transformDirections(transform, [finger.direction, finger.metacarpal.basis[0], finger.metacarpal.basis[1], finger.metacarpal.basis[2], finger.proximal.basis[0], finger.proximal.basis[1], finger.proximal.basis[2], finger.medial.basis[0], finger.medial.basis[1], finger.medial.basis[2], finger.distal.basis[0], finger.distal.basis[1], finger.distal.basis[2]]);
       }
       Leap.glMatrix.mat4.scale(transform, transform, scale);
       transformPositions(transform, [hand.palmPosition, hand.stabilizedPalmPosition, hand.sphereCenter, hand.arm.nextJoint, hand.arm.prevJoint]);
-      _ref1 = hand.fingers;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        finger = _ref1[_j];
+      ref1 = hand.fingers;
+      for (j = 0, len2 = ref1.length; j < len2; j++) {
+        finger = ref1[j];
         transformPositions(transform, [finger.carpPosition, finger.mcpPosition, finger.pipPosition, finger.dipPosition, finger.distal.nextJoint, finger.tipPosition]);
       }
       scalarScale = (scale[0] + scale[1] + scale[2]) / 3;
@@ -104,23 +104,23 @@
     };
     return {
       frame: function(frame) {
-        var finger, hand, len, _i, _j, _len, _len1, _ref, _ref1, _results;
+        var finger, hand, i, j, len, len1, len2, ref, ref1, results;
         if (!frame.valid || frame.data.transformed) {
           return;
         }
         frame.data.transformed = true;
-        _ref = frame.hands;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          hand = _ref[_i];
+        ref = frame.hands;
+        results = [];
+        for (i = 0, len1 = ref.length; i < len1; i++) {
+          hand = ref[i];
           transformWithMatrices(hand, scope.getTransform(hand), (scope.getScale(hand) || new THREE.Vector3(1, 1, 1)).toArray());
           if (scope.effectiveParent) {
             transformWithMatrices(hand, scope.effectiveParent.matrixWorld.elements, scope.effectiveParent.scale.toArray());
           }
           len = null;
-          _ref1 = hand.fingers;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            finger = _ref1[_j];
+          ref1 = hand.fingers;
+          for (j = 0, len2 = ref1.length; j < len2; j++) {
+            finger = ref1[j];
             len = Leap.vec3.create();
             Leap.vec3.sub(len, finger.mcpPosition, finger.carpPosition);
             finger.metacarpal.length = Leap.vec3.length(len);
@@ -132,9 +132,9 @@
             finger.distal.length = Leap.vec3.length(len);
           }
           Leap.vec3.sub(len, hand.arm.prevJoint, hand.arm.nextJoint);
-          _results.push(hand.arm.length = Leap.vec3.length(len));
+          results.push(hand.arm.length = Leap.vec3.length(len));
         }
-        return _results;
+        return results;
       }
     };
   });

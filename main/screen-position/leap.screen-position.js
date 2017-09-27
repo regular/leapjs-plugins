@@ -1,4 +1,5 @@
 //CoffeeScript generated from main/screen-position/leap.screen-position.coffee
+
 /*
 Adds the "screenPosition" method by default to hands and pointables.  This returns a vec3 (an array of length 3)
 with [x,y,z] screen coordinates indicating where the hand is, originating from the bottom left.
@@ -24,8 +25,7 @@ controller.use 'screenPosition', {
     ]
 }
 More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec3.html
-*/
-
+ */
 
 (function() {
   var screenPosition;

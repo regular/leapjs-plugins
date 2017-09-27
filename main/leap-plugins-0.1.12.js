@@ -1,22 +1,22 @@
-/*    
- * LeapJS-Plugins  - v0.1.12 - 2016-11-16    
- * http://github.com/leapmotion/leapjs-plugins/    
- *    
- * Copyright 2016 LeapMotion, Inc    
- *    
- * Licensed under the Apache License, Version 2.0 (the "License");    
- * you may not use this file except in compliance with the License.    
- * You may obtain a copy of the License at    
- *    
- *     http://www.apache.org/licenses/LICENSE-2.0    
- *    
- * Unless required by applicable law or agreed to in writing, software    
- * distributed under the License is distributed on an "AS IS" BASIS,    
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    
- * See the License for the specific language governing permissions and    
- * limitations under the License.    
- *    
- */    
+/* 
+ * LeapJS-Plugins  - v0.1.12 - 2017-09-27 
+ * http://github.com/leapmotion/leapjs-plugins/ 
+ * 
+ * Copyright 2017 LeapMotion, Inc 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ * 
+ */ 
 
 //CoffeeScript generated from main/bone-hand/leap.bone-hand.coffee
 (function() {
@@ -116,7 +116,7 @@
     };
 
     function HandMesh() {
-      var boneCount, finger, i, j, mesh, _i, _j, _k, _l;
+      var boneCount, finger, i, j, k, l, m, mesh, n, ref;
       material = !isNaN(scope.opacity) ? new THREE.MeshPhongMaterial({
         fog: false,
         transparent: true,
@@ -127,10 +127,10 @@
       boneRadius = 40 * boneScale;
       jointRadius = 40 * jointScale;
       this.fingerMeshes = [];
-      for (i = _i = 0; _i < 5; i = ++_i) {
+      for (i = k = 0; k < 5; i = ++k) {
         finger = [];
         boneCount = i === 0 ? 3 : 4;
-        for (j = _j = 0; 0 <= boneCount ? _j < boneCount : _j > boneCount; j = 0 <= boneCount ? ++_j : --_j) {
+        for (j = l = 0, ref = boneCount; 0 <= ref ? l < ref : l > ref; j = 0 <= ref ? ++l : --l) {
           mesh = new THREE.Mesh(new THREE.SphereGeometry(jointRadius, 32, 32), material.clone());
           mesh.name = "hand-bone-" + j;
           mesh.material.color.copy(jointColor);
@@ -157,7 +157,7 @@
         this.armMesh = new THREE.Object3D;
         this.armBones = [];
         this.armSpheres = [];
-        for (i = _k = 0; _k <= 3; i = ++_k) {
+        for (i = m = 0; m <= 3; i = ++m) {
           this.armBones.push(new THREE.Mesh(new THREE.CylinderGeometry(boneRadius, boneRadius, (i < 2 ? 1000 : 100), 32), material.clone()));
           this.armBones[i].material.color.copy(boneColor);
           this.armBones[i].castShadow = true;
@@ -168,7 +168,7 @@
           this.armMesh.add(this.armBones[i]);
         }
         this.armSpheres = [];
-        for (i = _l = 0; _l <= 3; i = ++_l) {
+        for (i = n = 0; n <= 3; i = ++n) {
           this.armSpheres.push(new THREE.Mesh(new THREE.SphereGeometry(jointRadius, 32, 32), material.clone()));
           this.armSpheres[i].material.color.copy(jointColor);
           this.armSpheres[i].castShadow = true;
@@ -180,11 +180,11 @@
     }
 
     HandMesh.prototype.traverse = function(callback) {
-      var i, mesh, _i, _j, _len, _ref;
-      for (i = _i = 0; _i < 5; i = ++_i) {
-        _ref = this.fingerMeshes[i];
-        for (_j = 0, _len = _ref.length; _j < _len; _j++) {
-          mesh = _ref[_j];
+      var i, k, l, len, mesh, ref;
+      for (i = k = 0; k < 5; i = ++k) {
+        ref = this.fingerMeshes[i];
+        for (l = 0, len = ref.length; l < len; l++) {
+          mesh = ref[l];
           callback(mesh);
         }
       }
@@ -192,9 +192,9 @@
     };
 
     HandMesh.prototype.scaleTo = function(hand) {
-      var armLenScale, armWidthScale, baseScale, bone, boneXOffset, finger, fingerBoneLengthScale, halfArmLength, i, j, mesh, _i, _j;
+      var armLenScale, armWidthScale, baseScale, bone, boneXOffset, finger, fingerBoneLengthScale, halfArmLength, i, j, k, l, mesh;
       baseScale = hand.middleFinger.proximal.length / this.fingerMeshes[2][1].geometry.parameters.height;
-      for (i = _i = 0; _i < 5; i = ++_i) {
+      for (i = k = 0; k < 5; i = ++k) {
         finger = hand.fingers[i];
         j = 0;
         while (true) {
@@ -216,7 +216,7 @@
       if (scope.arm) {
         armLenScale = hand.arm.length / (this.armBones[0].geometry.parameters.height + this.armBones[0].geometry.parameters.radiusTop);
         armWidthScale = hand.arm.width / (this.armBones[2].geometry.parameters.height + this.armBones[2].geometry.parameters.radiusTop);
-        for (i = _j = 0; _j <= 3; i = ++_j) {
+        for (i = l = 0; l <= 3; i = ++l) {
           this.armBones[i].scale.set(baseScale, (i < 2 ? armLenScale : armWidthScale), baseScale);
           this.armSpheres[i].scale.set(baseScale, baseScale, baseScale);
         }
@@ -235,8 +235,8 @@
     };
 
     HandMesh.prototype.formTo = function(hand) {
-      var bone, finger, i, j, mesh, _i;
-      for (i = _i = 0; _i < 5; i = ++_i) {
+      var bone, finger, i, j, k, mesh;
+      for (i = k = 0; k < 5; i = ++k) {
         finger = hand.fingers[i];
         j = 0;
         while (true) {
@@ -265,8 +265,8 @@
     };
 
     HandMesh.prototype.setVisibility = function(visible) {
-      var i, j, _i, _j, _results;
-      for (i = _i = 0; _i < 5; i = ++_i) {
+      var i, j, k, l, results;
+      for (i = k = 0; k < 5; i = ++k) {
         j = 0;
         while (true) {
           this.fingerMeshes[i][j].visible = visible;
@@ -277,12 +277,12 @@
         }
       }
       if (scope.arm) {
-        _results = [];
-        for (i = _j = 0; _j <= 3; i = ++_j) {
+        results = [];
+        for (i = l = 0; l <= 3; i = ++l) {
           this.armBones[i].visible = visible;
-          _results.push(this.armSpheres[i].visible = visible);
+          results.push(this.armSpheres[i].visible = visible);
         }
-        return _results;
+        return results;
       }
     };
 
@@ -407,12 +407,12 @@
 }).call(this);
 
 //CoffeeScript generated from main/hand-entry/leap.hand-entry.coffee
+
 /*
 Emits controller events when a hand enters of leaves the frame
 "handLost" and "handFound"
 Each event also includes the hand object, which will be invalid for the handLost event.
-*/
-
+ */
 
 (function() {
   var handEntry;
@@ -435,7 +435,7 @@ Each event also includes the hand object, which will be invalid for the handLost
     });
     return {
       frame: function(frame) {
-        var id, newValidHandIds, _i, _len, _results;
+        var i, id, len, newValidHandIds, results;
         newValidHandIds = frame.hands.map(function(hand) {
           return hand.id;
         });
@@ -449,17 +449,17 @@ Each event also includes the hand object, which will be invalid for the handLost
           len--;
         }
       };
-        _results = [];
-        for (_i = 0, _len = newValidHandIds.length; _i < _len; _i++) {
-          id = newValidHandIds[_i];
+        results = [];
+        for (i = 0, len = newValidHandIds.length; i < len; i++) {
+          id = newValidHandIds[i];
           if (activeHandIds.indexOf(id) === -1) {
             activeHandIds.push(id);
-            _results.push(this.emit('handFound', frame.hand(id)));
+            results.push(this.emit('handFound', frame.hand(id)));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       }
     };
   };
@@ -482,24 +482,24 @@ Each event also includes the hand object, which will be invalid for the handLost
     var dataFn, interFrameData;
     interFrameData = {};
     dataFn = function(prefix, hashOrKey, value) {
-      var dict, key, _name, _results;
-      interFrameData[_name = prefix + this.id] || (interFrameData[_name] = []);
+      var dict, key, name, results;
+      interFrameData[name = prefix + this.id] || (interFrameData[name] = []);
       dict = interFrameData[prefix + this.id];
       if (value !== void 0) {
         return dict[hashOrKey] = value;
       } else if ({}.toString.call(hashOrKey) === '[object String]') {
         return dict[hashOrKey];
       } else {
-        _results = [];
+        results = [];
         for (key in hashOrKey) {
           value = hashOrKey[key];
           if (value === void 0) {
-            _results.push(delete dict[key]);
+            results.push(delete dict[key]);
           } else {
-            _results.push(dict[key] = value);
+            results.push(dict[key] = value);
           }
         }
-        return _results;
+        return results;
       }
     };
     return {
@@ -2414,7 +2414,9 @@ Recording.prototype = {
 
 }).call(this);
 }( window ));
+
 //CoffeeScript generated from main/screen-position/leap.screen-position.coffee
+
 /*
 Adds the "screenPosition" method by default to hands and pointables.  This returns a vec3 (an array of length 3)
 with [x,y,z] screen coordinates indicating where the hand is, originating from the bottom left.
@@ -2440,8 +2442,7 @@ controller.use 'screenPosition', {
     ]
 }
 More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec3.html
-*/
-
+ */
 
 (function() {
   var screenPosition;
@@ -2502,7 +2503,7 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
 //CoffeeScript generated from main/transform/leap.transform.coffee
 (function() {
   Leap.plugin('transform', function(scope) {
-    var noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices, _directionTransform;
+    var _directionTransform, noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices;
     if (scope == null) {
       scope = {};
     }
@@ -2550,17 +2551,17 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
       }
     };
     transformPositions = function(matrix, vec3s) {
-      var vec3, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = vec3s.length; _i < _len; _i++) {
-        vec3 = vec3s[_i];
+      var i, len1, results, vec3;
+      results = [];
+      for (i = 0, len1 = vec3s.length; i < len1; i++) {
+        vec3 = vec3s[i];
         if (vec3) {
-          _results.push(Leap.vec3.transformMat4(vec3, vec3, matrix));
+          results.push(Leap.vec3.transformMat4(vec3, vec3, matrix));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
     transformMat4Implicit0 = function(out, a, m) {
       var x, y, z;
@@ -2573,31 +2574,31 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
       return out;
     };
     transformDirections = function(matrix, vec3s) {
-      var vec3, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = vec3s.length; _i < _len; _i++) {
-        vec3 = vec3s[_i];
+      var i, len1, results, vec3;
+      results = [];
+      for (i = 0, len1 = vec3s.length; i < len1; i++) {
+        vec3 = vec3s[i];
         if (vec3) {
-          _results.push(transformMat4Implicit0(vec3, vec3, matrix));
+          results.push(transformMat4Implicit0(vec3, vec3, matrix));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
     transformWithMatrices = function(hand, transform, scale) {
-      var finger, scalarScale, _i, _j, _len, _len1, _ref, _ref1;
+      var finger, i, j, len1, len2, ref, ref1, scalarScale;
       transformDirections(transform, [hand.direction, hand.palmNormal, hand.palmVelocity, hand.arm.basis[0], hand.arm.basis[1], hand.arm.basis[2]]);
-      _ref = hand.fingers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        finger = _ref[_i];
+      ref = hand.fingers;
+      for (i = 0, len1 = ref.length; i < len1; i++) {
+        finger = ref[i];
         transformDirections(transform, [finger.direction, finger.metacarpal.basis[0], finger.metacarpal.basis[1], finger.metacarpal.basis[2], finger.proximal.basis[0], finger.proximal.basis[1], finger.proximal.basis[2], finger.medial.basis[0], finger.medial.basis[1], finger.medial.basis[2], finger.distal.basis[0], finger.distal.basis[1], finger.distal.basis[2]]);
       }
       Leap.glMatrix.mat4.scale(transform, transform, scale);
       transformPositions(transform, [hand.palmPosition, hand.stabilizedPalmPosition, hand.sphereCenter, hand.arm.nextJoint, hand.arm.prevJoint]);
-      _ref1 = hand.fingers;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        finger = _ref1[_j];
+      ref1 = hand.fingers;
+      for (j = 0, len2 = ref1.length; j < len2; j++) {
+        finger = ref1[j];
         transformPositions(transform, [finger.carpPosition, finger.mcpPosition, finger.pipPosition, finger.dipPosition, finger.distal.nextJoint, finger.tipPosition]);
       }
       scalarScale = (scale[0] + scale[1] + scale[2]) / 3;
@@ -2605,23 +2606,23 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
     };
     return {
       frame: function(frame) {
-        var finger, hand, len, _i, _j, _len, _len1, _ref, _ref1, _results;
+        var finger, hand, i, j, len, len1, len2, ref, ref1, results;
         if (!frame.valid || frame.data.transformed) {
           return;
         }
         frame.data.transformed = true;
-        _ref = frame.hands;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          hand = _ref[_i];
+        ref = frame.hands;
+        results = [];
+        for (i = 0, len1 = ref.length; i < len1; i++) {
+          hand = ref[i];
           transformWithMatrices(hand, scope.getTransform(hand), (scope.getScale(hand) || new THREE.Vector3(1, 1, 1)).toArray());
           if (scope.effectiveParent) {
             transformWithMatrices(hand, scope.effectiveParent.matrixWorld.elements, scope.effectiveParent.scale.toArray());
           }
           len = null;
-          _ref1 = hand.fingers;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            finger = _ref1[_j];
+          ref1 = hand.fingers;
+          for (j = 0, len2 = ref1.length; j < len2; j++) {
+            finger = ref1[j];
             len = Leap.vec3.create();
             Leap.vec3.sub(len, finger.mcpPosition, finger.carpPosition);
             finger.metacarpal.length = Leap.vec3.length(len);
@@ -2633,9 +2634,9 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
             finger.distal.length = Leap.vec3.length(len);
           }
           Leap.vec3.sub(len, hand.arm.prevJoint, hand.arm.nextJoint);
-          _results.push(hand.arm.length = Leap.vec3.length(len));
+          results.push(hand.arm.length = Leap.vec3.length(len));
         }
-        return _results;
+        return results;
       }
     };
   });

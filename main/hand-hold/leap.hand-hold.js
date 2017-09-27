@@ -6,24 +6,24 @@
     var dataFn, interFrameData;
     interFrameData = {};
     dataFn = function(prefix, hashOrKey, value) {
-      var dict, key, _name, _results;
-      interFrameData[_name = prefix + this.id] || (interFrameData[_name] = []);
+      var dict, key, name, results;
+      interFrameData[name = prefix + this.id] || (interFrameData[name] = []);
       dict = interFrameData[prefix + this.id];
       if (value !== void 0) {
         return dict[hashOrKey] = value;
       } else if ({}.toString.call(hashOrKey) === '[object String]') {
         return dict[hashOrKey];
       } else {
-        _results = [];
+        results = [];
         for (key in hashOrKey) {
           value = hashOrKey[key];
           if (value === void 0) {
-            _results.push(delete dict[key]);
+            results.push(delete dict[key]);
           } else {
-            _results.push(dict[key] = value);
+            results.push(dict[key] = value);
           }
         }
-        return _results;
+        return results;
       }
     };
     return {
