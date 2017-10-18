@@ -1839,7 +1839,7 @@ Recording.prototype = {
     if (!!this.connection.connected) {
       setupStreamingEvents()
     } else {
-      this.on('ready', setupStreamingEvents)
+      this.once('ready', setupStreamingEvents)
     }
 
     return {}
