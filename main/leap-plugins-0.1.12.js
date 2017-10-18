@@ -1,5 +1,5 @@
 /* 
- * LeapJS-Plugins  - v0.1.12 - 2017-09-27 
+ * LeapJS-Plugins  - v0.1.12 - 2017-10-18 
  * http://github.com/leapmotion/leapjs-plugins/ 
  * 
  * Copyright 2017 LeapMotion, Inc 
@@ -2398,7 +2398,7 @@ Recording.prototype = {
     if (!!this.connection.connected) {
       setupStreamingEvents()
     } else {
-      this.on('ready', setupStreamingEvents)
+      this.once('ready', setupStreamingEvents)
     }
 
     return {}
