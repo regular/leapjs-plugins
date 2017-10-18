@@ -6,6 +6,9 @@
   "dependencies": {
     "three": "^0.87.1"
   },
+  "scripts": {
+    "build": "grunt"
+  },
   "devDependencies": {
     "coffee-script": ">=1.7.1",
     "grunt": "~1.0.1",
