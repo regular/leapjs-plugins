@@ -1,3 +1,16 @@
+# About this fork
+
+This fork was made to quickly fix urgent issues. The original repository seems to abandoned for over a year now.
+
+## Fixes
+- Updated away from threeJS dependency that was not compatible with plugin configuration.
+- Playback plugin did not add playback=true to played frames.
+- Playback plugin added more listeners each time Leap Motion is connected.
+
+## Improvements
+- Update dependencies.
+- Enable running grunt without global install.
+
 LeapJS Plugins
 ==============
 
