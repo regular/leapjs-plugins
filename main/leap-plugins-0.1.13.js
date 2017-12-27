@@ -1,5 +1,5 @@
 /* 
- * LeapJS-Plugins  - v0.1.12 - 2017-10-18 
+ * LeapJS-Plugins  - v0.1.13 - 2017-12-27 
  * http://github.com/leapmotion/leapjs-plugins/ 
  * 
  * Copyright 2017 LeapMotion, Inc 
@@ -2503,6 +2503,10 @@ More info on vec3 can be found, here: http://glmatrix.net/docs/2.2.0/symbols/vec
 
 //CoffeeScript generated from main/transform/leap.transform.coffee
 (function() {
+  var THREE;
+
+  THREE = typeof require !== 'undefined' ? require('three') : window.THREE;
+
   Leap.plugin('transform', function(scope) {
     var _directionTransform, noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices;
     if (scope == null) {

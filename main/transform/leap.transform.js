@@ -1,5 +1,9 @@
 //CoffeeScript generated from main/transform/leap.transform.coffee
 (function() {
+  var THREE;
+
+  THREE = typeof require !== 'undefined' ? require('three') : window.THREE;
+
   Leap.plugin('transform', function(scope) {
     var _directionTransform, noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices;
     if (scope == null) {
