@@ -8,6 +8,7 @@
 # position:  a THREE.Vector3
 # scale:  a THREE.Vector3 or a number.
 
+THREE = if typeof require != 'undefined' then require('three') else window.THREE
 
 Leap.plugin 'transform', (scope = {})->
   noop = [
