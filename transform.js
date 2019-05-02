@@ -1,19 +1,15 @@
-//CoffeeScript generated from main/transform/leap.transform.coffee
-(function() {
-  var THREE;
+module.exports = function(Leap, THREE) {
 
-  THREE = typeof require !== 'undefined' ? require('three') : window.THREE;
-
-  Leap.plugin('transform', function(scope) {
+  return function transform(scope) {
     var _directionTransform, noop, transformDirections, transformMat4Implicit0, transformPositions, transformWithMatrices;
     if (scope == null) {
       scope = {};
     }
     noop = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-    _directionTransform = new THREE.Matrix4;
+    _directionTransform = new THREE.Matrix4();
     if (scope.vr === true) {
       this.setOptimizeHMD(true);
-      scope.quaternion = (new THREE.Quaternion).setFromRotationMatrix((new THREE.Matrix4).set(-1, 0, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 1));
+      scope.quaternion = (new THREE.Quaternion()).setFromRotationMatrix((new THREE.Matrix4()).set(-1, 0, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 1));
       scope.scale = 0.001;
       scope.position = new THREE.Vector3(0, 0, -0.08);
     }
@@ -24,7 +20,7 @@
       var matrix;
       if (scope.matrix) {
         matrix = typeof scope.matrix === 'function' ? scope.matrix(hand) : scope.matrix;
-        if (window['THREE'] && matrix instanceof THREE.Matrix4) {
+        if (matrix instanceof THREE.Matrix4) {
           return matrix.elements;
         } else {
           return matrix;
@@ -141,6 +137,5 @@
         return results;
       }
     };
-  });
-
-}).call(this);
+  }
+}

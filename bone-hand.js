@@ -1,10 +1,8 @@
-//CoffeeScript generated from main/bone-hand/leap.bone-hand.coffee
-(function() {
-  var HandMesh, THREE, armTopAndBottomRotation, baseBoneRotation, boneColor, boneHandLost, boneRadius, boneScale, initScene, jointColor, jointRadius, jointScale, material, onHand, scope;
+// jshint -W030
+module.exports = function(Leap, THREE) {
+  var HandMesh, armTopAndBottomRotation, baseBoneRotation, boneColor, boneHandLost, boneRadius, boneScale, initScene, jointColor, jointRadius, jointScale, material, onHand, scope;
 
   scope = null;
-
-  THREE = typeof require !== 'undefined' ? require('three') : window.THREE;
 
   initScene = function(targetEl, scale) {
     var camera, far, height, near, renderer, width;
@@ -49,21 +47,13 @@
   };
 
   baseBoneRotation = null;
-
   jointColor = null;
-
   boneColor = null;
-
   boneScale = null;
-
   jointScale = null;
-
   boneRadius = null;
-
   jointRadius = null;
-
   material = null;
-
   armTopAndBottomRotation = null;
 
   HandMesh = (function() {
@@ -86,7 +76,7 @@
 
     HandMesh.create = function() {
       var mesh;
-      mesh = new HandMesh;
+      mesh = new HandMesh();
       mesh.setVisibility(false);
       HandMesh.unusedHandMeshes.push(mesh);
       if (HandMesh.onMeshCreated) {
@@ -134,7 +124,7 @@
         this.fingerMeshes.push(finger);
       }
       if (scope.arm) {
-        this.armMesh = new THREE.Object3D;
+        this.armMesh = new THREE.Object3D();
         this.armBones = [];
         this.armSpheres = [];
         for (i = m = 0; m <= 3; i = ++m) {
@@ -231,14 +221,14 @@
           ++j;
           mesh = this.fingerMeshes[i][j];
           mesh.position.fromArray(bone.center());
-          mesh.setRotationFromMatrix((new THREE.Matrix4).fromArray(bone.matrix()));
+          mesh.setRotationFromMatrix((new THREE.Matrix4()).fromArray(bone.matrix()));
           mesh.quaternion.multiply(baseBoneRotation);
           ++j;
         }
       }
       if (this.armMesh) {
         this.armMesh.position.fromArray(hand.arm.center());
-        this.armMesh.setRotationFromMatrix((new THREE.Matrix4).fromArray(hand.arm.matrix()));
+        this.armMesh.setRotationFromMatrix((new THREE.Matrix4()).fromArray(hand.arm.matrix()));
         this.armMesh.quaternion.multiply(baseBoneRotation);
       }
       return this;
@@ -303,15 +293,15 @@
     return handMesh = hand.data('handMesh', null);
   };
 
-  Leap.plugin('boneHand', function(options) {
+  return function boneHand(options) {
     var controller, scale;
     if (options == null) {
       options = {};
     }
     scope = options;
     controller = this;
-    jointColor = (new THREE.Color).setHex(0x5daa00);
-    boneColor = (new THREE.Color).setHex(0xffffff);
+    jointColor = (new THREE.Color()).setHex(0x5daa00);
+    boneColor = (new THREE.Color()).setHex(0xffffff);
     scope.boneScale && (boneScale = scope.boneScale);
     scope.jointScale && (jointScale = scope.jointScale);
     scope.boneColor && (boneColor = scope.boneColor);
@@ -343,13 +333,13 @@
         }
       }
     };
-    baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0));
+    baseBoneRotation = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0));
     boneScale = 1 / 6;
     jointScale = 1 / 5;
     boneRadius = null;
     jointRadius = null;
     material = null;
-    armTopAndBottomRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
+    armTopAndBottomRotation = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
     HandMesh.onMeshCreated = function(mesh) {
       return controller.emit('handMeshCreated', mesh);
     };
@@ -382,6 +372,6 @@
     return {
       hand: onHand
     };
-  });
+  }
 
-}).call(this);
+}

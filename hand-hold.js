@@ -1,12 +1,11 @@
-//CoffeeScript generated from main/hand-hold/leap.hand-hold.coffee
-(function() {
-  var handHold;
+module.exports = function() {
 
-  handHold = function() {
+  return function handHold() {
     var dataFn, interFrameData;
     interFrameData = {};
     dataFn = function(prefix, hashOrKey, value) {
       var dict, key, name, results;
+      // jshint -W030
       interFrameData[name = prefix + this.id] || (interFrameData[name] = []);
       dict = interFrameData[prefix + this.id];
       if (value !== void 0) {
@@ -71,12 +70,4 @@
     };
   };
 
-  if ((typeof Leap !== 'undefined') && Leap.Controller) {
-    Leap.Controller.plugin('handHold', handHold);
-  } else if (typeof module !== 'undefined') {
-    module.exports.handHold = handHold;
-  } else {
-    throw 'leap.js not included';
-  }
-
-}).call(this);
+}
