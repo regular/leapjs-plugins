@@ -119,9 +119,9 @@ module.exports = function(Leap, THREE) {
           }
           len = null;
           ref1 = hand.fingers;
+          len = Leap.vec3.create();
           for (j = 0, len2 = ref1.length; j < len2; j++) {
             finger = ref1[j];
-            len = Leap.vec3.create();
             Leap.vec3.sub(len, finger.mcpPosition, finger.carpPosition);
             finger.metacarpal.length = Leap.vec3.length(len);
             Leap.vec3.sub(len, finger.pipPosition, finger.mcpPosition);
