@@ -105,20 +105,22 @@ module.exports = function(Leap, THREE) {
           mesh.name = "hand-bone-" + j;
           mesh.material.color.copy(jointColor);
           mesh.renderOrder = ((i * 9) + (2 * j)) / 36;
-          mesh.castShadow = true;
+          mesh.castShadow = false;
           scope.scene.add(mesh);
           finger.push(mesh);
-          mesh = new THREE.Mesh(new THREE.CylinderGeometry(boneRadius, boneRadius, 40, 32), material.clone());
+          
+          //mesh = new THREE.Mesh(new THREE.CylinderGeometry(boneRadius, boneRadius, 40, 32), material.clone());
+          mesh = new THREE.Mesh(new THREE.SphereGeometry(boneRadius, 32, 32), material.clone());
           mesh.name = "hand-joint-" + j;
           mesh.material.color.copy(boneColor);
           mesh.renderOrder = ((i * 9) + (2 * j) + 1) / 36;
-          mesh.castShadow = true;
+          mesh.castShadow = false;
           scope.scene.add(mesh);
           finger.push(mesh);
         }
         mesh = new THREE.Mesh(new THREE.SphereGeometry(jointRadius, 32, 32), material.clone());
         mesh.material.color.copy(jointColor);
-        mesh.castShadow = true;
+        mesh.castShadow = false;
         scope.scene.add(mesh);
         finger.push(mesh);
         this.fingerMeshes.push(finger);
@@ -163,7 +165,10 @@ module.exports = function(Leap, THREE) {
 
     HandMesh.prototype.scaleTo = function(hand) {
       var armLenScale, armWidthScale, baseScale, bone, boneXOffset, finger, fingerBoneLengthScale, halfArmLength, i, j, k, l, mesh;
-      baseScale = hand.middleFinger.proximal.length / this.fingerMeshes[2][1].geometry.parameters.height;
+      // TODO: CRASH: middlefinger is undefined
+      if (!hand.middleFinger) return this
+      //baseScale = hand.middleFinger.proximal.length / this.fingerMeshes[2][1].geometry.parameters.height;
+      baseScale = hand.middleFinger.proximal.length / 40
       for (i = k = 0; k < 5; i = ++k) {
         finger = hand.fingers[i];
         j = 0;
@@ -178,8 +183,9 @@ module.exports = function(Leap, THREE) {
           mesh.scale.set(baseScale, baseScale, baseScale);
           j++;
           mesh = this.fingerMeshes[i][j];
-          fingerBoneLengthScale = bone.length / mesh.geometry.parameters.height;
-          mesh.scale.set(baseScale, fingerBoneLengthScale, baseScale);
+          //fingerBoneLengthScale = bone.length / mesh.geometry.parameters.height;
+          //mesh.scale.set(baseScale, fingerBoneLengthScale, baseScale);
+          mesh.scale.set(baseScale, baseScale, baseScale);
           j++;
         }
       }
@@ -221,8 +227,8 @@ module.exports = function(Leap, THREE) {
           ++j;
           mesh = this.fingerMeshes[i][j];
           mesh.position.fromArray(bone.center());
-          mesh.setRotationFromMatrix((new THREE.Matrix4()).fromArray(bone.matrix()));
-          mesh.quaternion.multiply(baseBoneRotation);
+          //mesh.setRotationFromMatrix((new THREE.Matrix4()).fromArray(bone.matrix()));
+          //mesh.quaternion.multiply(baseBoneRotation);
           ++j;
         }
       }
