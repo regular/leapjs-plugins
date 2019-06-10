@@ -214,6 +214,7 @@ module.exports = function(Leap, THREE) {
       var bone, finger, i, j, k, mesh;
       for (i = k = 0; k < 5; i = ++k) {
         finger = hand.fingers[i];
+        if (!finger) continue
         j = 0;
         while (true) {
           if (j === this.fingerMeshes[i].length - 1) {
